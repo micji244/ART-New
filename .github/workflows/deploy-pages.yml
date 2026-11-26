@@ -1,0 +1,76 @@
+# Builds the frontend (Vite + typecheck) and deploys to GitHub Pages.
+# Trigger: push to main (or manually from repo > Actions).
+#
+# To activate Pages after the first successful run:
+#   Settings > Pages > Build and deployment > Source: "GitHub Actions"
+#   (leave the folder blank — this workflow uploads dist/ to the pages branch.)
+#
+# The Render API URL is baked into the bundle at build time via VITE_API_BASE_URL.
+# Set it here as a repository secret (Settings > Secrets and variables > Actions >
+# New repository secret) so the deployed UI talks to your Render backend.
+name: Build & Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Only one concurrent deployment per branch (latest wins, older ones are skipped).
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck + build frontend
+        # npm run build = tsc --noEmit (client) + tsc -p tsconfig.server.json
+        # + vite build. VITE_API_BASE_URL is inlined into the JS bundle here.
+        run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_API_BASE_URL || secrets.VITE_API_BASE_URL || '' }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          # Note: the Pages site must already be enabled on this repo
+          # (Settings > Pages > Source: "GitHub Actions" -> this workflow),
+          # because creating the site from a workflow needs extra token scope
+          # on private repos.
+          enablement: false
+
+      - name: Upload dist/ artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    # Deploy to the production site on main; preview otherwise.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

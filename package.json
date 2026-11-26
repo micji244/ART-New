@@ -1,0 +1,34 @@
+{
+  "name": "art-maintenance-system-typescript",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:local": "npm run build && node scripts/dev-local.mjs",
+    "build": "npm run typecheck && tsc -p tsconfig.server.json && vite build",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.server.json --noEmit",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "start": "node --env-file=.env server-build/index.js"
+  },
+  "dependencies": {
+    "pg": "^8.23.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "embedded-postgres": "^18.6.0-beta.19",
+    "oxlint": "^1.81.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0"
+  },
+  "allowScripts": {
+    "@embedded-postgres/windows-x64@18.6.0-beta.19": true
+  }
+}

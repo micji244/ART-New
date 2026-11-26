@@ -1,5 +1,6 @@
 # Builds the frontend (Vite + typecheck) and deploys to GitHub Pages.
-# Trigger: push to main (or manually from repo > Actions).
+# Trigger: manual only (repo > Actions > Run workflow). The app is hosted on
+# Render (render.yaml), which serves the frontend and API from one origin.
 #
 # To activate Pages after the first successful run:
 #   Settings > Pages > Build and deployment > Source: "GitHub Actions"
@@ -11,8 +12,6 @@
 name: Build & Deploy to GitHub Pages
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 # Only one concurrent deployment per branch (latest wins, older ones are skipped).

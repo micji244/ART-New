@@ -1,0 +1,27 @@
+# Render Blueprint: one free web service that serves the React frontend (dist/)
+# and the API from the same origin, backed by Neon PostgreSQL.
+# Secrets (sync: false) are entered in the Render dashboard, never committed.
+services:
+  - type: web
+    name: art-maintenance
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: node server-build/index.js
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: HOST
+        value: 0.0.0.0
+      # Free-tier disk is wiped on every restart, so file backups would be lost.
+      # Data itself lives in Neon.
+      - key: AUTO_BACKUP
+        value: "off"
+      - key: DATABASE_URL
+        sync: false
+      - key: ADMIN_USER_ID
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false

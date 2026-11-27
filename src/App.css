@@ -7811,3 +7811,28 @@ input[type="checkbox"] {
     color: #e8f1f5 !important;
   }
 }
+
+/* ===== Login page: restore the full-screen layout =====
+   The generic page rules above (#root max-width 1120px, and the shared
+   ".login-container, .department-container { max-width: 640px }" block) were
+   overriding the full-screen login design defined near the top of this file,
+   squeezing it into a 640px column on desktop. This block re-applies the login
+   layout's own values; it only affects the login screen. */
+#root:has(> .app > .login-container) {
+  max-width: none;
+  padding: 0;
+}
+
+.app > .login-container {
+  max-width: none;
+  margin: 0;
+  padding: clamp(78px, 10vh, 112px) clamp(24px, 7vw, 112px) 22px;
+}
+
+@media (max-width: 900px) {
+  .app > .login-container { padding: 78px 22px 20px; }
+}
+
+@media (max-width: 520px) {
+  .app > .login-container { padding: 72px 14px 15px; }
+}

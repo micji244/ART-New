@@ -15,8 +15,7 @@ export default function SystemRecoveryPage({ backupBusy, backupMessage, deletedR
 <section className="admin-backup-card">
       <div>
         <h2>สำรองข้อมูลระบบ</h2>
-        <p>ระบบสำรองฐานข้อมูลให้อัตโนมัติตอนเปิดเซิร์ฟเวอร์และทุก 24 ชั่วโมง โดยเก็บสำเนา 30 วัน</p>
-        <code>D:\MC-Maintenance-system-data\backups</code>
+        <p>กด "สำรองข้อมูลตอนนี้" เพื่อสร้างสำเนาฐานข้อมูลไว้บนเซิร์ฟเวอร์ (เก็บสำเนา 30 วัน) การสำรองอัตโนมัติเปิดหรือปิดได้ที่ค่า AUTO_BACKUP ของเซิร์ฟเวอร์</p>
       </div>
       <button className="main-menu-button" type="button" onClick={handleCreateBackup} disabled={backupBusy}>
         {backupBusy ? "กำลังสำรองข้อมูล…" : "สำรองข้อมูลตอนนี้"}

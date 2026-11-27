@@ -1,9 +1,9 @@
 import type { AppPageContext } from "./pageContext";
 
-type DivisionPageProps = Pick<AppPageContext, "announcementDragging" | "announcementError" | "announcementFileInputRef" | "announcementSaving" | "announcements" | "divisionName" | "handleAnnouncementFiles" | "handleDeleteAnnouncement" | "handleLogout" | "isAdmin" | "setAnnouncementDragging" | "setPage" | "setPasswordChangeError" | "setPasswordChangeMessage" | "setPreviewImage" | "setSelectedDepartment" | "setSelectedDivision" | "visibleDivisions">;
+type DivisionPageProps = Pick<AppPageContext, "announcementDragging" | "announcementError" | "announcementFileInputRef" | "announcementSaving" | "announcements" | "divisionName" | "handleAnnouncementFiles" | "handleDeleteAnnouncement" | "isAdmin" | "setAnnouncementDragging" | "setPage" | "setPasswordChangeError" | "setPasswordChangeMessage" | "setPreviewImage" | "setSelectedDepartment" | "setSelectedDivision" | "visibleDivisions">;
 
 // Page "division" — moved out of App.tsx unchanged. App decides when it is shown and passes the shared state it uses.
-export default function DivisionPage({ announcementDragging, announcementError, announcementFileInputRef, announcementSaving, announcements, divisionName, handleAnnouncementFiles, handleDeleteAnnouncement, handleLogout, isAdmin, setAnnouncementDragging, setPage, setPasswordChangeError, setPasswordChangeMessage, setPreviewImage, setSelectedDepartment, setSelectedDivision, visibleDivisions }: DivisionPageProps) {
+export default function DivisionPage({ announcementDragging, announcementError, announcementFileInputRef, announcementSaving, announcements, divisionName, handleAnnouncementFiles, handleDeleteAnnouncement, isAdmin, setAnnouncementDragging, setPage, setPasswordChangeError, setPasswordChangeMessage, setPreviewImage, setSelectedDepartment, setSelectedDivision, visibleDivisions }: DivisionPageProps) {
   return (
 <main className="department-container">
           <section className="announcement-board" aria-labelledby="announcement-board-title">
@@ -96,7 +96,6 @@ export default function DivisionPage({ announcementDragging, announcementError, 
             ))}
             {visibleDivisions.length === 0 && <p>ยังไม่มีฝ่ายที่ได้รับสิทธิ์ กรุณาติดต่อผู้ดูแลระบบ</p>}
           </div>
-          <button className="back-button" onClick={handleLogout}>← ออกจากระบบ</button>
           <footer>ART Maintenance System</footer>
         </main>
   );
